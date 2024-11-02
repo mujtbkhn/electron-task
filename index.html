@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+        }
+
+        .note-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .note-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .note-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .note-item.selected {
+            background-color: #e3e6f4;
+            border-left: 4px solid #4361ee;
+        }
+
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .note-preview {
+            font-size: 0.85em;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        #noteTitle {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        #noteTitle:focus {
+            outline: none;
+            border-color: #4361ee;
+        }
+
+        #noteContent {
+            /* flex: 1; */
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            resize: none;
+            font-size: 15px;
+            line-height: 1.5;
+            font-family: inherit;
+        }
+
+        #noteContent:focus {
+            outline: none;
+            border-color: #4361ee;
+        }
+
+        .button {
+            padding: 12px 20px;
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .button:hover {
+            background-color: #3251ee;
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .new-note-btn {
+            margin-bottom: 15px;
+            background-color: #2ecc71;
+        }
+
+        .new-note-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .timestamp {
+            font-size: 0.75em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-style: italic;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            position: absolute;
+            bottom: -20px;
+        }
+
+        .input-error {
+            border-color: #dc3545 !important;
+        }
+
+        /* Adding required field indicator style */
+        .required-field::after {
+            content: ' *';
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <button class="button new-note-btn" onclick="createNewNote()">
+                + New Note
+            </button>
+            <div class="note-list" id="noteList">
+                <div class="empty-state">No notes yet. Create your first note!</div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="input-group">
+                <label class="input-label required-field" for="noteTitle">Title</label>
+                <input type="text" id="noteTitle" placeholder="Enter note title">
+                <div class="error-message" id="titleError">Title is required</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label required-field" for="noteContent">Content</label>
+                <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+                <div class="error-message" id="contentError">Content is required</div>
+            </div>
+            <button class="button" onclick="saveNote()">Save Note</button>
+        </div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html>
