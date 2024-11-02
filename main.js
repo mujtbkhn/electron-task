@@ -5,8 +5,7 @@ const Store = require('electron-store');
 // Initialize electron store
 // This creates a JSON file in the app's user data directory:
 // - Windows: C:\Users\<username>\AppData\Roaming\electron-notes-app\config.json
-// - macOS: ~/Library/Application Support/electron-notes-app/config.json
-// - Linux: ~/.config/electron-notes-app/config.json
+
 const store = new Store({
     name: 'notes-db', // This will create notes-db.json
     defaults: {
@@ -24,7 +23,7 @@ function createWindow() {
             nodeIntegration: true,
             contextIsolation: false
         },
-        show: false, // Don't show the window until it's ready
+        show: false, 
         backgroundColor: '#ffffff'
     });
 
